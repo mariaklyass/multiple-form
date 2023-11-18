@@ -1,24 +1,23 @@
-import Address from "../components/Address";
-import Navbar from "../components/Navbar";
 import { useState } from "react";
-import Transport from "../components/Transport";
+import Navbar from "../components/Navbar";
+import Address from "../components/Address";
+import NewTransport from "../components/newTransport";
+import TransportList from "../components/TransportList";
+import EditTransport from "../components/NewEdit";
 import Contacts from "../components/Contacts";
 import Modal from "../components/Modal";
 import useModal from "../components/useModal";
 import moment from "moment";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Form = () => {
   // states and handlers
-  // for address
+  // ADDRESS
   const [address, setAddress] = useState({
     from: "",
     to: "",
-    // date: "",
     duration: 0,
   });
-
   const [selectedDate, setSelectedDate] = useState(new Date());
   const onChangeDate = (date) => {
     setSelectedDate(date);
@@ -37,7 +36,7 @@ const Form = () => {
     });
   };
   const handleDuration = (e: any) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
     setAddress((prev: any) => {
       if (name === "-") {
         return { ...prev, duration: parseInt(e.target.value) - 1 };
@@ -46,52 +45,30 @@ const Form = () => {
       }
     });
   };
-  // for transport
-  const [transport, setTransport] = useState({
-    moversNumber: 0,
-    passengersNumber: 0,
-  });
-  const [transportSelect, setTransportSelect] = useState("transport-1");
-  const [transportSwitch, setTransportSwitch] = useState([
-    { name: "movers", status: false },
-    { name: "passengers", status: false },
+  // TRANSPORT
+  const [items, updateItems] = useState([
+    {
+      name: "Transport 1",
+      movers: false,
+      passengers: false,
+      moversNumber: 0,
+      passengersNumber: 0,
+      selected: "Любая газель1",
+    },
+    {
+      name: "Transport 2",
+      movers: false,
+      passengers: false,
+      moversNumber: 0,
+      passengersNumber: 0,
+      selected: "Любая газель2",
+    },
   ]);
-  const handleSelect = (e) => {
-    setTransportSelect(e.target.value);
-  };
-  const handleTransportToggle = (event: any, name: any) => {
-    event.persist();
-    event.preventDefault();
-    const newTransportSwitch = transportSwitch.map((transport) => {
-      if (transport.name === name) {
-        return { ...transport, status: !transport.status };
-      }
-      return transport;
-    });
-    setTransportSwitch(newTransportSwitch);
-  };
-  const handleMovers = (e: any) => {
-    const { name, value } = e.target;
-    setTransport((prev: any) => {
-      if (name === "-") {
-        return { ...prev, moversNumber: parseInt(e.target.value) - 1 };
-      } else if (name === "+") {
-        return { ...prev, moversNumber: parseInt(e.target.value) + 1 };
-      }
-    });
-  };
-  const handlePassengers = (e: any) => {
-    const { name, value } = e.target;
-    setTransport((prev: any) => {
-      if (name === "-") {
-        return { ...prev, passengersNumber: parseInt(e.target.value) - 1 };
-      } else if (name === "+") {
-        return { ...prev, passengersNumber: parseInt(e.target.value) + 1 };
-      }
-    });
-  };
+  const [showAddFieldModal, updateShowAddFieldModal] = useState(false);
+  const [showEditFieldModal, updateShowEditFieldModal] = useState(false);
+  const [activeItem, updateActiveItem] = useState({});
 
-  // for contacts
+  // CONTACTS
   const [contacts, setContacts] = useState({
     surname: "",
     name: "",
@@ -107,20 +84,29 @@ const Form = () => {
       };
     });
   };
-
-  // modal
+  // MODAL (SUBMIT)
   const { isShowing, toggle } = useModal();
-
-  // reset button
+  // RESET
   const handleReset = () => {
-    setAddress({ from: "", to: "", date: "", duration: 0 });
-    setTransport({
-      moversNumber: 0,
-      passengersNumber: 0,
-    });
-    setTransportSwitch([
-      { name: "movers", status: false },
-      { name: "passengers", status: false },
+    setAddress({ from: "", to: "", duration: 0 });
+    setSelectedDate(new Date());
+    updateItems([
+      {
+        name: "Transport 1",
+        movers: false,
+        passengers: false,
+        moversNumber: 0,
+        passengersNumber: 0,
+        selected: "Любая газель1",
+      },
+      {
+        name: "Transport 2",
+        movers: false,
+        passengers: false,
+        moversNumber: 0,
+        passengersNumber: 0,
+        selected: "Любая газель2",
+      },
     ]);
     setContacts({
       surname: "",
@@ -133,13 +119,10 @@ const Form = () => {
   return (
     <div className="container">
       <Navbar />
-
       <section className="section_wrapper">
         <h1 className="heading_main">Заявка на отправку груза</h1>
-        {/* form itself */}
         <form>
           <div className="gap">
-            {/* from address */}
             <section className="grid">
               <Address
                 address={address}
@@ -150,44 +133,47 @@ const Form = () => {
                 format={dateFormat}
               />
             </section>
+            <section>
+              {showAddFieldModal ? (
+                <NewTransport
+                  items={items}
+                  updateItems={updateItems}
+                  updateShowAddFieldModal={updateShowAddFieldModal}
+                />
+              ) : null}
+              {showEditFieldModal ? (
+                <EditTransport
+                  items={items}
+                  updateItems={updateItems}
+                  updateShowEditFieldModal={updateShowEditFieldModal}
+                  activeItem={activeItem}
+                  updateActiveItem={updateActiveItem}
+                />
+              ) : null}
 
-            {/* transport */}
-            <Transport
-              title="Транспорт 1"
-              transport={transport}
-              switch={transportSwitch}
-              select={transportSelect}
-              onToggle={handleTransportToggle}
-              onCounterMovers={handleMovers}
-              onCounterPassengers={handlePassengers}
-              onSelect={handleSelect}
-            />
+              <div className="divider-line"></div>
+              <TransportList
+                activeItem={activeItem}
+                updateActiveItem={updateActiveItem}
+                updateShowEditFieldModal={updateShowEditFieldModal}
+                updateItems={updateItems}
+                items={items}
+              />
+              <div
+                className="step-border_sm"
+                onClick={() => updateShowAddFieldModal(true)}
+              >
+                <img className="icon" src="./plus.svg"></img>
+                Добавить еще транспорт
+              </div>
+            </section>
 
-            {/* transport 2 */}
-            <Transport
-              title="Транспорт 2"
-              // change props
-              transport={transport}
-              switch={transportSwitch}
-              onToggle={handleTransportToggle}
-              onCounterMovers={handleMovers}
-              onCounterPassengers={handlePassengers}
-            />
-            {/* add transport */}
-            {/* contacts */}
             <Contacts contacts={contacts} onChangeContacts={handleContacts} />
 
-            {/* button send / reset */}
-            {/* <Button /> */}
             <div className="grid">
-              <button
-                className="btn_submit"
-                // value="Open modal"
-                onClick={toggle}
-              >
+              <button className="btn_submit" onClick={toggle}>
                 Отправить
               </button>
-
               <button className="btn_reset" onClick={handleReset}>
                 Сбросить
               </button>
@@ -195,19 +181,14 @@ const Form = () => {
           </div>
         </form>
       </section>
-      {/* modal window */}
+
       <div>
         {" "}
         <Modal
           isShowing={isShowing}
           hide={toggle}
-          result={[
-            address,
-            transport,
-            transportSelect,
-            transportSwitch,
-            contacts,
-          ]}
+          items={items}
+          result={[address, items, contacts]}
           date={moment(selectedDate).format("DD.MM.yyyy")}
         />
       </div>

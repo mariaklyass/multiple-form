@@ -6,7 +6,6 @@ const useModal = () => {
   function toggle(e: any) {
     e.preventDefault();
     setIsShowing(!isShowing);
-    console.log(isShowing);
   }
   return { isShowing, toggle };
 };

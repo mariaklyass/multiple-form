@@ -45,7 +45,7 @@ const Contacts = (props) => {
         </label>
       </div>
       <div className="consent">
-        <input type="checkbox" id="consent" name="consent" required></input>
+        <input type="checkbox" id="consent" name="consent"></input>
         Соглашаюсь на обработку своих персональных данных
       </div>
     </div>

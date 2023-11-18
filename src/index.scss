@@ -24,9 +24,32 @@ body {
   margin: 0 auto;
 }
 .grid {
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 350.5px 350.5px auto;
   gap: 20px;
+}
+.grid_sm {
+  display: grid;
+  grid-template-columns: 390.5px 390.5px;
+  gap: 20px;
+}
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  gap: 5px;
+  span {
+    width: 2rem;
+    border: 1px solid $inactive-color;
+    border-radius: 10px;
+    padding: 0.1rem 0.5rem;
+  }
+}
+.add {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 .gap {
   display: grid;
@@ -63,7 +86,7 @@ body {
   display: inline-block;
   border: 1px solid $primary-color;
   border-radius: 21px;
-  padding: 20px;
+  padding: 18px;
   width: 100%;
   // height: 100%;
 }
@@ -75,6 +98,26 @@ body {
   @extend %step-border;
   width: 390.5px;
   // height: 138px;
+}
+.step-border_add {
+  @extend %step-border;
+  width: 802px;
+  border: 2px solid $inactive-color;
+  margin: 2rem 0;
+}
+.step-border_sm {
+  @extend %step-border;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  white-space: nowrap;
+  margin-top: 20px;
+  border-radius: 16px;
+  color: $primary-color;
+  padding: 18px 16px;
+  width: 248px;
+  height: 52px;
 }
 
 // navigation bar
@@ -262,6 +305,32 @@ body {
   @extend %btn;
   background-color: $light-color;
   color: $primary-color;
+}
+%add-btn {
+  border: 1px solid $inactive-color;
+  border-radius: 26px;
+  padding: 0.7rem 1rem;
+  background-color: #88a4f5;
+  width: 8rem;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  color: #000;
+  font-size: 20px;
+}
+
+.add-btn_cancel {
+  @extend %add-btn;
+  background-color: $inactive-color;
+}
+.add-btn_submit {
+  @extend %add-btn;
+  background-color: $secondary-color;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
 
 .modal-overlay {

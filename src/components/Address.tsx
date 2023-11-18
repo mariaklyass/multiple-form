@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Address = (props) => {
   return (
-    <div className="grid">
+    <div className="grid_sm">
       <div className="step-border_address">
         <h2 className="heading_secondary">Откуда</h2>
         <div className="input__wrapper">
@@ -59,7 +59,7 @@ const Address = (props) => {
             <input
               type="text"
               name="to"
-              placeholder="ул. Маршала Блюхера, 72"
+              placeholder="ул. Юннатов, 18"
               value={props.address.to}
               onChange={props.onChangeAddress}
             />

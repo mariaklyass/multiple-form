@@ -104,7 +104,7 @@ const Transport = (props: any) => {
             onChange={props.onSelect}
           >
             <option value="transport-1">Любая газель</option>
-            <option value="transport-1">Любая газель</option>
+            <option value="transport-2">Любая газель</option>
             <option value="transport-3">Любая газель</option>
           </select>
         </div>

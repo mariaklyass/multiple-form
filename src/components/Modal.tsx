@@ -1,5 +1,4 @@
 import React from "react";
-// import ReactDOM from "react-dom";
 import { createPortal } from "react-dom";
 const Modal = (props: any) => {
   return props.isShowing
@@ -39,52 +38,42 @@ const Modal = (props: any) => {
                 </div>
                 <hr className="divider" />
 
-                <div className="results">
-                  <h3 className="heading_secondary">
-                    Транспорт 1: <span>Любая газель</span>
-                  </h3>
-                  <p className="secondary-text">
-                    <span className="bold">Кол-во грузчиков: </span>
-                    {props.result[1].moversNumber}{" "}
-                  </p>
-                  <p className="secondary-text">
-                    {" "}
-                    <span className="bold">Кол-во пассажиров: </span>{" "}
-                    {props.result[1].passengersNumber}
-                  </p>
-                  <div></div>
-                  <h3 className="heading_secondary">
-                    Транспорт 1: <span>Любая газель</span>
-                  </h3>
-                  <p className="secondary-text">
-                    <span className="bold">Кол-во грузчиков: </span>
-                    {props.result[1].moversNumber}{" "}
-                  </p>
-                  <p className="secondary-text">
-                    {" "}
-                    <span className="bold">Кол-во пассажиров: </span>{" "}
-                    {props.result[1].passengersNumber}
-                  </p>
-                </div>
+                {props.items.map((item, i) => {
+                  return (
+                    <div className="results" key={i}>
+                      <h3 className="heading_secondary">
+                        Транспорт {i + 1}: <span>{item.selected}</span>
+                      </h3>
+                      <p className="secondary-text">
+                        <span className="bold">Кол-во грузчиков: </span>
+                        {item.moversNumber}{" "}
+                      </p>
+                      <p className="secondary-text">
+                        {" "}
+                        <span className="bold">Кол-во пассажиров: </span>{" "}
+                        {item.passengersNumber}
+                      </p>
+                    </div>
+                  );
+                })}
                 <hr className="divider" />
-
                 <div className="results">
                   <p className="secondary-text">
                     <span className="bold">Заказчик: </span>
                     <p>
-                      {props.result[4].surname}
-                      {props.result[4].name}
+                      {props.result[2].surname}
+                      {props.result[2].name}
                     </p>
                   </p>
                   <p className="secondary-text">
                     {" "}
                     <span className="bold">Телефон: </span>{" "}
-                    {props.result[4].phone}
+                    {props.result[2].phone}
                   </p>
                   <p className="secondary-text">
                     {" "}
                     <span className="bold">Email: </span>
-                    {props.result[4].email}
+                    {props.result[2].email}
                   </p>
                 </div>
 
@@ -96,7 +85,6 @@ const Modal = (props: any) => {
                 type="button"
                 className="btn_submit btn_modal"
                 data-dismiss="modal"
-                // arias-label="Close"
                 onClick={props.hide}
               >
                 <span aria-hidden="true">OK</span>
