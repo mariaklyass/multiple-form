@@ -21,7 +21,7 @@
 
 ## Live Demo
 
-(https://mariaklyass.github.io/multiple-form/)
+https://mariaklyass.github.io/multiple-form/
 
 ## Ход работы
 
