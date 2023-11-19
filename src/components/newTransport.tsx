@@ -24,8 +24,6 @@ interface Item {
 const NewTransport = (props: NewTransportProps) => {
   const { updateShowAddFieldModal, items, updateItems } = props;
 
-  const [internalFieldName, updateInternalFieldName] = useState("");
-
   const [internalFieldMoversNumber, updateInternalFieldMoversNumber] =
     useState(0);
   const [internalFieldPassengersNumber, updateInternalFieldPassengersNumber] =
@@ -177,7 +175,7 @@ const NewTransport = (props: NewTransportProps) => {
             updateItems([
               ...items,
               {
-                name: internalFieldName,
+                name: "",
                 movers: internalFieldMovers,
                 passengers: internalFieldPassengers,
                 moversNumber: internalFieldMoversNumber,

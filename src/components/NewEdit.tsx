@@ -40,7 +40,6 @@ const EditTransport = (props: EditTransportProps) => {
     // updateActiveItem,
   } = props;
 
-  const [internalFieldName, updateInternalFieldName] = useState("");
   const [internalFieldMoversNumber, updateInternalFieldMoversNumber] =
     useState(0);
   const [internalFieldPassengersNumber, updateInternalFieldPassengersNumber] =
@@ -197,9 +196,7 @@ const EditTransport = (props: EditTransportProps) => {
                 items.map((i) => {
                   if (i.name === activeItem.name)
                     return {
-                      name: internalFieldName
-                        ? internalFieldName
-                        : activeItem.name,
+                      name: "" ? "" : activeItem.name,
                       movers: internalFieldMovers
                         ? internalFieldMovers
                         : activeItem.movers,
