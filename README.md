@@ -1,27 +1,27 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Требования к заданию:
 
-Currently, two official plugins are available:
+1.  Вёрстка должна быть в десктопном разрешении, но при уменьшении разрешения элементы не должны припалить к краю окна.Теги должны отображать семантику и быть правильно подобраны.
+2.  Скрипты должны быть написаны на TS, использование React на усмотрение.
+3.  Вёрстка с соблюдением структуры и нейминга в соответствии с методологией БЭМ.
+4.  Для стилей используется препроцессор SASS в диалекте SCSS.
+5.  Текст, количество пунктов в оформлении заказа, количество полей форм могутменяться - вёрстка должна это предусматривать.
+6.  Форма должна быть подготовленной к работе (каждое поле должно быть input[name='....']).
+7.  Не допускается использование html/css-фреймоворков или сеток по типу bootstrapи др.
+8.  Приветствуется инициативность в создании динамики на странице (анимации, hover, transition!).
+9.  Допускается использование сторонних плагинов для стилизации элементов, если это необходимо (стилизация select).
+10. После отправки формы должно появиться окно с результатами заполнения формы.
+11. Должно быть реализовано добавление и удаление транспорта.
+12. Должна быть реализована возможность выбора даты.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### Макет к заданию:
 
-## Expanding the ESLint configuration
+![Layout](/public/task-layout.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Ход работы
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Проект сделан на React вместе с TypeScript на базе Vite, без использования CSS-фреймворков. Стили написаны на SASS(SCSS).
+- Сначала сверстала все согласно макету; добавила состояния и начала декомпозировать (для каждой мини-формы свой компонент). Структура итогового проекта - это одна главная страница (вся форма) и компоненты: Navbar (навигационная панель), Address (формы Откуда/Куда), Contacts (форма Контакты), Modal (Модальное окно) + кастомный хук useModal, и для динамического комопнента с формой Транспорт компоненты NewTransport, EditTransport, TransportItem, TransportList.
+- Форму с транспортом можно добавлять/удалять/редактировать.
+- Данные заполненной формы отображаются в модальном окне, которое рендерится через Портал (createPortal).
