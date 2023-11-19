@@ -19,6 +19,10 @@
 
 ![Layout](/public/task-layout.png)
 
+## Live Demo
+
+(https://mariaklyass.github.io/multiple-form/)
+
 ## Ход работы
 
 - Проект сделан на React вместе с TypeScript на базе Vite, без использования CSS-фреймворков. Стили написаны на SASS(SCSS).
