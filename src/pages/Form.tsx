@@ -19,14 +19,14 @@ const Form = () => {
     duration: 0,
   });
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const onChangeDate = (date) => {
+  const onChangeDate = (date: Date) => {
     setSelectedDate(date);
     let formatted = moment(date).format("DD.MM.yyyy");
     console.log(formatted);
   };
   const dateFormat = "dd.MM.yyyy";
 
-  const handleAddress = (e: any) => {
+  const handleAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddress((prev) => {
       return {
@@ -35,38 +35,41 @@ const Form = () => {
       };
     });
   };
-  const handleDuration = (e: any) => {
-    const { name } = e.target;
-    setAddress((prev: any) => {
+
+  const handleDuration = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
+    setAddress((prev) => {
       if (name === "-") {
-        return { ...prev, duration: parseInt(e.target.value) - 1 };
+        return { ...prev, duration: prev.duration - 1 };
       } else if (name === "+") {
-        return { ...prev, duration: parseInt(e.target.value) + 1 };
+        return { ...prev, duration: prev.duration + 1 };
       }
+      return prev; // Default return value
     });
   };
   // TRANSPORT
   const [items, updateItems] = useState([
     {
       name: "Transport 1",
-      movers: false,
-      passengers: false,
-      moversNumber: 0,
-      passengersNumber: 0,
+      movers: true,
+      passengers: true,
+      moversNumber: 1,
+      passengersNumber: 1,
       selected: "Любая газель1",
     },
     {
       name: "Transport 2",
-      movers: false,
-      passengers: false,
-      moversNumber: 0,
-      passengersNumber: 0,
+      movers: true,
+      passengers: true,
+      moversNumber: 1,
+      passengersNumber: 1,
       selected: "Любая газель2",
     },
   ]);
   const [showAddFieldModal, updateShowAddFieldModal] = useState(false);
   const [showEditFieldModal, updateShowEditFieldModal] = useState(false);
-  const [activeItem, updateActiveItem] = useState({});
+
+  const [activeItem, updateActiveItem] = useState(Object);
 
   // CONTACTS
   const [contacts, setContacts] = useState({
@@ -75,7 +78,7 @@ const Form = () => {
     phone: "",
     email: "",
   });
-  const handleContacts = (e: any) => {
+  const handleContacts = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setContacts((prev) => {
       return {
@@ -134,13 +137,6 @@ const Form = () => {
               />
             </section>
             <section>
-              {showAddFieldModal ? (
-                <NewTransport
-                  items={items}
-                  updateItems={updateItems}
-                  updateShowAddFieldModal={updateShowAddFieldModal}
-                />
-              ) : null}
               {showEditFieldModal ? (
                 <EditTransport
                   items={items}
@@ -150,8 +146,6 @@ const Form = () => {
                   updateActiveItem={updateActiveItem}
                 />
               ) : null}
-
-              <div className="divider-line"></div>
               <TransportList
                 activeItem={activeItem}
                 updateActiveItem={updateActiveItem}
@@ -166,6 +160,13 @@ const Form = () => {
                 <img className="icon" src="./plus.svg"></img>
                 Добавить еще транспорт
               </div>
+              {showAddFieldModal ? (
+                <NewTransport
+                  items={items}
+                  updateItems={updateItems}
+                  updateShowAddFieldModal={updateShowAddFieldModal}
+                />
+              ) : null}
             </section>
 
             <Contacts contacts={contacts} onChangeContacts={handleContacts} />

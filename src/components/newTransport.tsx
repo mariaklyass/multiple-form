@@ -1,37 +1,60 @@
 import { useState } from "react";
-
-const NewTransport = (props) => {
+interface NewTransportProps {
+  updateShowAddFieldModal: (value: boolean) => void;
+  items: Item[];
+  updateItems: (
+    items: {
+      name: string;
+      movers: boolean;
+      passengers: boolean;
+      moversNumber: number;
+      passengersNumber: number;
+      selected: string;
+    }[]
+  ) => void;
+}
+interface Item {
+  name: string;
+  movers: boolean;
+  passengers: boolean;
+  moversNumber: number;
+  passengersNumber: number;
+  selected: string;
+}
+const NewTransport = (props: NewTransportProps) => {
   const { updateShowAddFieldModal, items, updateItems } = props;
+
+  const [internalFieldName, updateInternalFieldName] = useState("");
 
   const [internalFieldMoversNumber, updateInternalFieldMoversNumber] =
     useState(0);
   const [internalFieldPassengersNumber, updateInternalFieldPassengersNumber] =
     useState(0);
 
-  const handleMoversNumber = (e) => {
-    const { name } = e.target;
+  const handleMoversNumber = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
     if (name === "-") {
-      updateInternalFieldMoversNumber(parseInt(e.target.value) - 1);
+      updateInternalFieldMoversNumber(parseInt(e.currentTarget.value) - 1);
     } else if (name === "+") {
-      updateInternalFieldMoversNumber(parseInt(e.target.value) + 1);
+      updateInternalFieldMoversNumber(parseInt(e.currentTarget.value) + 1);
     }
   };
 
-  const handlePassengersNumber = (e) => {
-    const { name } = e.target;
+  const handlePassengersNumber = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
     if (name === "-") {
-      updateInternalFieldPassengersNumber(parseInt(e.target.value) - 1);
+      updateInternalFieldPassengersNumber(parseInt(e.currentTarget.value) - 1);
     } else if (name === "+") {
-      updateInternalFieldPassengersNumber(parseInt(e.target.value) + 1);
+      updateInternalFieldPassengersNumber(parseInt(e.currentTarget.value) + 1);
     }
   };
 
-  const [internalFieldMovers, updateInternalFieldMovers] = useState(false);
+  const [internalFieldMovers, updateInternalFieldMovers] = useState(true);
   const handleMovers = () => {
     updateInternalFieldMovers(!internalFieldMovers);
   };
   const [internalFieldPassengers, updateInternalFieldPassengers] =
-    useState(false);
+    useState(true);
   const handlePassengers = () => {
     updateInternalFieldPassengers(!internalFieldPassengers);
   };
@@ -46,6 +69,8 @@ const NewTransport = (props) => {
 
   return (
     <div className="step-border_add">
+      <h3 className="center">Отметьте необходимые поля и нажмите "Добавить"</h3>
+
       <div className="grid">
         <div className="input">
           <div className="counter">
@@ -54,7 +79,7 @@ const NewTransport = (props) => {
               <button
                 className={internalFieldMovers ? "on" : "off"}
                 type="button"
-                value={internalFieldMovers}
+                value={internalFieldMovers.toString()}
                 onClick={handleMovers}
               >
                 <span />
@@ -90,7 +115,7 @@ const NewTransport = (props) => {
               <button
                 className={internalFieldPassengers ? "on" : "off"}
                 type="button"
-                value={internalFieldPassengers}
+                value={internalFieldPassengers.toString()}
                 onClick={handlePassengers}
               >
                 <span />
@@ -152,6 +177,7 @@ const NewTransport = (props) => {
             updateItems([
               ...items,
               {
+                name: internalFieldName,
                 movers: internalFieldMovers,
                 passengers: internalFieldPassengers,
                 moversNumber: internalFieldMoversNumber,

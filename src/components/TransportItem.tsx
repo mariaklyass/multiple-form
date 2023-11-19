@@ -1,15 +1,39 @@
+type TransportItemProps = {
+  value: any;
+  index: number;
+  items: {
+    name: string;
+    movers: boolean;
+    passengers: boolean;
+    moversNumber: number;
+    passengersNumber: number;
+    selected: string;
+  }[];
+  updateItems: (
+    items: {
+      name: string;
+      movers: boolean;
+      passengers: boolean;
+      moversNumber: number;
+      passengersNumber: number;
+      selected: string;
+    }[]
+  ) => void;
+  updateShowEditFieldModal: (value: boolean) => void;
+  updateActiveItem: (value: string) => void;
+  activeItem: string;
+};
+
 const TransportItem = ({
   value,
   index,
-  currentIndex,
   items,
   updateItems,
-  activeItem,
   updateShowEditFieldModal,
   updateActiveItem,
-}) => {
+}: TransportItemProps) => {
   return (
-    <div data-index={index} className="step-border_main">
+    <div className="step-border_main">
       <h2>Транспорт {index + 1}</h2>
       <div className="grid">
         <div className="input">
@@ -20,7 +44,6 @@ const TransportItem = ({
                 className={value.movers ? "on" : "off"}
                 type="button"
                 value={value.movers}
-                // onClick={handleMovers}
               >
                 <span />
               </button>
@@ -30,21 +53,11 @@ const TransportItem = ({
             Кол-во грузчиков
             <div className="counter__btn">
               {" "}
-              <button
-                type="button"
-                name="-"
-                value={value.moversNumber}
-                // onClick={handleMoversNumber}
-              >
+              <button type="button" name="-" value={value.moversNumber}>
                 -
               </button>
               {value.moversNumber}
-              <button
-                type="button"
-                name="+"
-                value={value.moversNumber}
-                // onClick={handleMoversNumber}
-              >
+              <button type="button" name="+" value={value.moversNumber}>
                 +
               </button>
             </div>
@@ -56,7 +69,6 @@ const TransportItem = ({
                 className={value.passengers ? "on" : "off"}
                 type="button"
                 value={value.passengers}
-                // onClick={handlePassengers}
               >
                 <span />
               </button>
@@ -65,48 +77,23 @@ const TransportItem = ({
           <div className="counter">
             Кол-во пассажиров
             <div className="counter__btn">
-              <button
-                type="button"
-                name="-"
-                value={value.passengersNumber}
-                // onClick={handlePassengersNumber}
-              >
+              <button type="button" name="-" value={value.passengersNumber}>
                 -
               </button>
               {value.passengersNumber}
-              <button
-                type="button"
-                name="+"
-                value={value.passengersNumber}
-                // onClick={handlePassengersNumber}
-              >
+              <button type="button" name="+" value={value.passengersNumber}>
                 +
               </button>
             </div>
           </div>
         </div>
         <div className="select-wrapper">
-          <select
-            // onChange={(e) => updateInternalFieldType(e.target.value)}
-            className="input"
-          >
-            {/* {truckOptions.map((t, index) => (
-                <option value={t.name} key={index}>
-                  {t.name}
-                </option>
-              ))} */}
+          <select className="input">
             <option value={value.selected}>{value.selected}</option>
             <option value={value.selected}>{value.selected}</option>
             <option value={value.selected}>{value.selected}</option>
           </select>
         </div>
-
-        {/* <div className="drag-icon-container"> */}
-        {/* <SVG src={drag} alt="draggable" className="draggable" /> */}
-        {/* </div> */}
-        {/* {value.name} */}
-        {/* {value.required ? "*" : ""} */}
-
         <div className="flex">
           <span
             onClick={() => {
@@ -114,8 +101,6 @@ const TransportItem = ({
               updateActiveItem(value);
             }}
           >
-            {/* <SVG src={edit} alt="edit" className="field-action" /> */}
-
             <img className="icon" src="./edit.svg"></img>
           </span>
           <span
@@ -123,11 +108,9 @@ const TransportItem = ({
               updateItems(items.filter((i) => i.name !== value.name))
             }
           >
-            {/* <SVG src={close} alt="remove" className="field-action" /> */}
             <p>X</p>
           </span>
         </div>
-        {/* divide here, next is grid's </div> */}
       </div>
     </div>
   );

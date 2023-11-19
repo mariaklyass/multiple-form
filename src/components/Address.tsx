@@ -1,7 +1,23 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Address = (props) => {
+type AddressProps = {
+  address: { from: string; to: string; duration: number };
+  onChangeAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onCounter: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  selectedDate: Date;
+  onChangeDate: (date: Date) => void;
+  format: string;
+};
+
+const Address = ({
+  address,
+  onChangeAddress,
+  onCounter,
+  selectedDate,
+  onChangeDate,
+  format,
+}: AddressProps) => {
   return (
     <div className="grid_sm">
       <div className="step-border_address">
@@ -13,17 +29,17 @@ const Address = (props) => {
               type="text"
               name="from"
               placeholder="ул. Маршала Блюхера, 72"
-              value={props.address.from}
-              onChange={props.onChangeAddress}
+              value={address.from}
+              onChange={onChangeAddress}
             />
           </label>
           <label className="input">
             <h4>Дата отправки</h4>
             <DatePicker
               className="date"
-              selected={props.selectedDate}
-              onChange={props.onChangeDate}
-              dateFormat={props.format}
+              selected={selectedDate}
+              onChange={onChangeDate}
+              dateFormat={format}
             />
           </label>
         </div>
@@ -32,17 +48,17 @@ const Address = (props) => {
           <div className="counter__btn">
             <button
               type="button"
-              value={props.address.duration}
-              onClick={props.onCounter}
+              value={address.duration}
+              onClick={onCounter}
               name="-"
             >
               -
             </button>{" "}
-            {props.address.duration} ч.
+            {address.duration} ч.
             <button
               type="button"
-              value={props.address.duration}
-              onClick={props.onCounter}
+              value={address.duration}
+              onClick={onCounter}
               name="+"
             >
               +
@@ -60,8 +76,8 @@ const Address = (props) => {
               type="text"
               name="to"
               placeholder="ул. Юннатов, 18"
-              value={props.address.to}
-              onChange={props.onChangeAddress}
+              value={address.to}
+              onChange={onChangeAddress}
             />
           </label>
         </div>

@@ -1,4 +1,27 @@
 import TransportItem from "./TransportItem";
+type TransportListProps = {
+  items: {
+    name: string;
+    movers: boolean;
+    passengers: boolean;
+    moversNumber: number;
+    passengersNumber: number;
+    selected: string;
+  }[];
+  updateItems: (
+    items: {
+      name: string;
+      movers: boolean;
+      passengers: boolean;
+      moversNumber: number;
+      passengersNumber: number;
+      selected: string;
+    }[]
+  ) => void;
+  updateShowEditFieldModal: (value: boolean) => void;
+  activeItem: string;
+  updateActiveItem: (value: string) => void;
+};
 
 const TransportList = ({
   items,
@@ -6,7 +29,7 @@ const TransportList = ({
   updateShowEditFieldModal,
   activeItem,
   updateActiveItem,
-}) => {
+}: TransportListProps) => {
   return (
     <div className="gap">
       {items.map((value, index) => (

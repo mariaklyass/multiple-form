@@ -1,6 +1,37 @@
 import { useState } from "react";
+interface EditTransportProps {
+  updateShowEditFieldModal: (value: boolean) => void;
+  items: Item[];
+  updateItems: (
+    items: {
+      name: string;
+      movers: boolean;
+      passengers: boolean;
+      moversNumber: number;
+      passengersNumber: number;
+      selected: string;
+    }[]
+  ) => void;
+  updateActiveItem: (value: string) => void;
+  activeItem: {
+    name: string;
+    movers: boolean;
+    passengers: boolean;
+    moversNumber: number;
+    passengersNumber: number;
+    selected: string;
+  };
+}
+interface Item {
+  name: string;
+  movers: boolean;
+  passengers: boolean;
+  moversNumber: number;
+  passengersNumber: number;
+  selected: string;
+}
 
-const EditTransport = (props) => {
+const EditTransport = (props: EditTransportProps) => {
   const {
     updateShowEditFieldModal,
     items,
@@ -9,35 +40,36 @@ const EditTransport = (props) => {
     updateActiveItem,
   } = props;
 
+  const [internalFieldName, updateInternalFieldName] = useState("");
   const [internalFieldMoversNumber, updateInternalFieldMoversNumber] =
     useState(0);
   const [internalFieldPassengersNumber, updateInternalFieldPassengersNumber] =
     useState(0);
 
-  const handleMoversNumber = (e) => {
-    const { name } = e.target;
+  const handleMoversNumber = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
     if (name === "-") {
-      updateInternalFieldMoversNumber(parseInt(e.target.value) - 1);
+      updateInternalFieldMoversNumber(parseInt(e.currentTarget.value) - 1);
     } else if (name === "+") {
-      updateInternalFieldMoversNumber(parseInt(e.target.value) + 1);
+      updateInternalFieldMoversNumber(parseInt(e.currentTarget.value) + 1);
     }
   };
 
-  const handlePassengersNumber = (e) => {
-    const { name } = e.target;
+  const handlePassengersNumber = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
     if (name === "-") {
-      updateInternalFieldPassengersNumber(parseInt(e.target.value) - 1);
+      updateInternalFieldPassengersNumber(parseInt(e.currentTarget.value) - 1);
     } else if (name === "+") {
-      updateInternalFieldPassengersNumber(parseInt(e.target.value) + 1);
+      updateInternalFieldPassengersNumber(parseInt(e.currentTarget.value) + 1);
     }
   };
 
-  const [internalFieldMovers, updateInternalFieldMovers] = useState(false);
+  const [internalFieldMovers, updateInternalFieldMovers] = useState(true);
   const handleMovers = () => {
     updateInternalFieldMovers(!internalFieldMovers);
   };
   const [internalFieldPassengers, updateInternalFieldPassengers] =
-    useState(false);
+    useState(true);
   const handlePassengers = () => {
     updateInternalFieldPassengers(!internalFieldPassengers);
   };
@@ -53,6 +85,7 @@ const EditTransport = (props) => {
   return (
     <div className="modal-background">
       <div className="step-border_add">
+        <h3 className="center">После редактирования нажмите "Сохранить"</h3>
         <div className="grid">
           <div className="input">
             <div className="counter">
@@ -61,7 +94,7 @@ const EditTransport = (props) => {
                 <button
                   className={internalFieldMovers ? "on" : "off"}
                   type="button"
-                  value={internalFieldMovers}
+                  value={internalFieldMovers.toString()}
                   onClick={handleMovers}
                 >
                   <span />
@@ -97,7 +130,7 @@ const EditTransport = (props) => {
                 <button
                   className={internalFieldPassengers ? "on" : "off"}
                   type="button"
-                  value={internalFieldPassengers}
+                  value={internalFieldPassengers.toString()}
                   onClick={handlePassengers}
                 >
                   <span />
@@ -150,7 +183,7 @@ const EditTransport = (props) => {
             className="add-btn_cancel"
             onClick={() => {
               updateShowEditFieldModal(false);
-              updateActiveItem({});
+              // updateActiveItem({});
             }}
           >
             Отменить
@@ -159,12 +192,14 @@ const EditTransport = (props) => {
             className="add-btn_submit"
             onClick={() => {
               updateShowEditFieldModal(false);
-              updateActiveItem({});
+              // updateActiveItem({});
               updateItems(
                 items.map((i) => {
                   if (i.name === activeItem.name)
                     return {
-                      ordinality: activeItem.ordinality,
+                      name: internalFieldName
+                        ? internalFieldName
+                        : activeItem.name,
                       movers: internalFieldMovers
                         ? internalFieldMovers
                         : activeItem.movers,

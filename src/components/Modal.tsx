@@ -1,6 +1,42 @@
 import React from "react";
 import { createPortal } from "react-dom";
-const Modal = (props: any) => {
+
+interface ModalProps {
+  isShowing: boolean;
+  hide: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  items: Item[];
+  result: [
+    {
+      from: string;
+      to: string;
+      duration: number;
+    },
+    {
+      name: string;
+      movers: boolean;
+      passengers: boolean;
+      moversNumber: number;
+      passengersNumber: number;
+      selected: string;
+    }[],
+    {
+      surname: string;
+      name: string;
+      phone: string;
+      email: string;
+    }
+  ];
+  date: string;
+}
+interface Item {
+  movers: boolean;
+  passengers: boolean;
+  moversNumber: number;
+  passengersNumber: number;
+  selected: string;
+}
+
+const Modal = (props: ModalProps) => {
   return props.isShowing
     ? createPortal(
         <React.Fragment>
@@ -38,7 +74,7 @@ const Modal = (props: any) => {
                 </div>
                 <hr className="divider" />
 
-                {props.items.map((item, i) => {
+                {props.items.map((item, i: number) => {
                   return (
                     <div className="results" key={i}>
                       <h3 className="heading_secondary">
