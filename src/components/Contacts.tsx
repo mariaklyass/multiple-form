@@ -1,4 +1,9 @@
-const Contacts = (props) => {
+type ContactsProps = {
+  contacts: { name: string; surname: string; phone: string; email: string };
+  onChangeContacts: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const Contacts = ({ contacts, onChangeContacts }: ContactsProps) => {
   return (
     <div className="step-border_main">
       <h2>Контакты</h2>
@@ -9,8 +14,8 @@ const Contacts = (props) => {
             type="text"
             name="surname"
             placeholder="Укажите фамилию"
-            value={props.contacts.surname}
-            onChange={props.onChangeContacts}
+            value={contacts.surname}
+            onChange={onChangeContacts}
           />
         </label>
 
@@ -20,8 +25,8 @@ const Contacts = (props) => {
             type="text"
             name="phone"
             placeholder="+7 (___) ___ - __ - __"
-            value={props.contacts.phone}
-            onChange={props.onChangeContacts}
+            value={contacts.phone}
+            onChange={onChangeContacts}
           />
         </label>
         <label className="input">
@@ -30,8 +35,8 @@ const Contacts = (props) => {
             type="text"
             name="name"
             placeholder="Укажите имя"
-            value={props.contacts.name}
-            onChange={props.onChangeContacts}
+            value={contacts.name}
+            onChange={onChangeContacts}
           />
         </label>
         <label className="input">
@@ -39,8 +44,8 @@ const Contacts = (props) => {
           <input
             type="text"
             name="email"
-            value={props.contacts.email}
-            onChange={props.onChangeContacts}
+            value={contacts.email}
+            onChange={onChangeContacts}
           />
         </label>
       </div>

@@ -37,7 +37,7 @@ const EditTransport = (props: EditTransportProps) => {
     items,
     updateItems,
     activeItem,
-    updateActiveItem,
+    // updateActiveItem,
   } = props;
 
   const [internalFieldName, updateInternalFieldName] = useState("");

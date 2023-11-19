@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Address from "../components/Address";
-import NewTransport from "../components/newTransport";
+import NewTransport from "../components/NewTransport";
 import TransportList from "../components/TransportList";
 import EditTransport from "../components/NewEdit";
 import Contacts from "../components/Contacts";
